@@ -1,16 +1,18 @@
 "use client";
 
 import { getRoleFromToken } from "@/helpers/getRoleFromToken";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const NavBar = () => {
+  const {user} = useUser()
   const [isAdmin, setIsAdmin] = useState<boolean | undefined>(false);
+
 
   useEffect(() => {
     const role = getRoleFromToken();
     if (role) {
-      console.log(role);
       if (role === "guest") {
         setIsAdmin(false);
       } else {
@@ -18,7 +20,6 @@ const NavBar = () => {
       }
     }
   }, [isAdmin]);
-
 
   return (
     <nav className="navbar lg:max-w-6xl mx-auto bg-gray-900 text-white">
@@ -28,7 +29,7 @@ const NavBar = () => {
           <span className="text-purple-500">Top</span>
         </Link>
       </div>
-      <div className="navbar-center text-sm hidden lg:flex">
+      <div className="navbar-center text-sm  hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link href={"/"}>
@@ -36,21 +37,17 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link href={"/events"}>
-              Encuentra Eventos
-            </Link>
+            <Link href={"/events"}>Encuentra Eventos</Link>
           </li>
           <li>
-            <Link href={"#"}>
-              <button>Precios</button>
-            </Link>
+            <Link href={"/cart"}>Carrito</Link>
           </li>
-          {/* Renderiza la opción de Admin solo si el usuario es admin */}
+          
+          
+          
           {isAdmin && (
             <li>
-              <Link href={"/admin"}>
-                Admin
-              </Link>
+              <Link href={"/admin"}>Admin</Link>
             </li>
           )}
           <li>
@@ -72,9 +69,9 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link className="btn bg-purple-500 text-white hover:bg-purple-600" href={"/micuenta"}>
+        <a className="btn bg-purple-500 text-white hover:bg-purple-600" href={user ? "/micuenta" : "/api/auth/login"}>
           Mi Cuenta
-        </Link>
+        </a>
       </div>
     </nav>
   );
