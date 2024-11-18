@@ -4,6 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import PaymentButton from "./PaymentButton";
 import { texts } from "../helpers/texts";
 import { currencies } from "../helpers/currencies";
+import * as dotenv from "dotenv";
+
+dotenv.config({
+  path: ".env",
+});
+
 type Language = "es" | "en" | "pt" | "fr";
 type Currency = "USD" | "EUR" | "ARS" | "BRL";
 
@@ -16,6 +22,7 @@ export default function Payments() {
   >("credit_card");
   const [language, setLanguage] = useState<Language>("es");
   const [currency, setCurrency] = useState<Currency>("USD");
+  const [email, setEmail] = useState(""); // Nuevo estado para el correo electrónico
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCVC, setCardCVC] = useState("");
@@ -39,8 +46,8 @@ export default function Payments() {
   useEffect(() => {
     const createPreference = async () => {
       if (paymentMethod !== "mercado_pago") return;
-
       console.log("ID de evento:", eventId);
+      console.log("email:", email);
 
       try {
         const response = await fetch(
@@ -50,20 +57,19 @@ export default function Payments() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ eventId, amount: total }),
+            body: JSON.stringify({ eventId, email }), // Incluir el correo electrónico en el cuerpo de la solicitud
           }
         );
 
         if (!response.ok) {
-          if (response.status === 404) {
-            console.error(
-              "Error 404: URL no encontrada - /payment/create_preference"
-            );
-          } else if (response.status === 500) {
-            console.error("Error 500: Error interno del servidor");
-          } else {
-            console.error(`Error inesperado: ${response.status}`);
-          }
+          const errorMessage =
+            response.status === 404
+              ? "Error 404: URL no encontrada - /payment/create_preference"
+              : response.status === 500
+              ? "Error 500: Error interno del servidor"
+              : `Error inesperado: ${response.status}`;
+
+          console.error(errorMessage);
           return;
         }
 
@@ -75,7 +81,7 @@ export default function Payments() {
     };
 
     createPreference();
-  }, [paymentMethod, total, eventId]);
+  }, [paymentMethod, total, eventId, email]);
 
   const handleTicketChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTicketCount(parseInt(e.target.value));
@@ -190,6 +196,21 @@ export default function Payments() {
               ))}
             </select>
           </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-semibold mb-2">
+              Correo Electrónico
+            </label>
+            <input
+              id="email"
+              type="email"
+              placeholder="john.doe@example.com"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border border-purple-500 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white transition-colors duration-200 text-gray-800"
+            />
+          </div>
         </div>
 
         <div>
@@ -231,20 +252,6 @@ export default function Payments() {
               transition={{ duration: 0.3 }}
               className="space-y-4 overflow-hidden"
             >
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-semibold mb-2"
-                >
-                  {t.name}
-                </label>
-                <input
-                  id="name"
-                  placeholder="John Doe"
-                  required
-                  className="w-full px-3 py-2 border border-purple-500 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white transition-colors duration-200 text-gray-800"
-                />
-              </div>
               <div>
                 <label
                   htmlFor="card"
