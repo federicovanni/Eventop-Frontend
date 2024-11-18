@@ -10,7 +10,7 @@ const UserDashboard  = () => {
         <title>Dashboard de Usuario</title>
         <meta name="description" content="Panel de control de usuario" />
       </Head>
-      <UserInfo />
+      <UserInfo/>
     </>
   );
 };

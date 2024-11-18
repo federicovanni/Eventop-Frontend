@@ -33,24 +33,48 @@ export const UserInfo = () => {
     }
      
     return (
-        <div className="flex flex-col items-center w-full mx-auto gap-4">
-            {userData && (
-                <section>
-                    <div className="text-center">
-                        <h2 className="text-2xl font-bold text-slate-200">Hola, {userData.given_name}</h2>
-                        <img src={userData.picture} className="rounded-lg text-center mx-auto p-4" />
-                    </div>
-                    <ul>
-                        <li className="text-slate-200 font-semibold text-sm">Email: {userData.email}</li>        
-                    </ul>
-                </section>
-            )}
-            <a
-                href='api/auth/logout'
-                className="text-center p-4 bg-gray-950 text-white font-semibold mx-auto rounded-lg"
-            >
-                Log Out
-            </a>
+        <div className={`flex flex-col items-center w-full max-w-2xl mx-auto p-6`}>
+      <div className="w-full bg-white rounded-lg shadow-md overflow-hidden">
+        {userData && (
+          <div className="p-6">
+            <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+              <div className="relative w-24 h-24 rounded-full overflow-hidden">
+              <img
+                src={userData.picture || 'https://i.pinimg.com/736x/05/f9/fa/05f9fa8e055a33e9e59ca51bca27e401.jpg'}
+                alt={userData.name ? `${userData.name}'s picture` : 'Usuario'}               
+                loading="lazy"
+                className="rounded-full shadow-md"
+                srcSet={`${userData.picture}?w=300 300w, ${userData.picture}?w=600 600w, ${userData.picture}?w=1200 1200w`} // Usa imágenes optimizadas para diferentes tamaños
+                />
+              </div>
+              <div className="text-center sm:text-left space-y-2">
+                <h1 className="text-2xl font-semibold text-gray-800">
+                    ¡Hola, {userData.nickname || 'Usuario'}!
+                </h1>
+                <p className="text-sm text-gray-600">
+                    {userData.email || 'No disponible'}
+                </p>
+             </div>
+            </div>
+          </div>
+        )}
+        
+        <div className="px-6 py-3 bg-gray-50  flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+          <button
+            onClick={() => alert("Configuración de perfil")}
+            className="w-full sm:w-auto px-4 py-2 text-white bg-purple-500 font-semibold rounded-md shadow hover:bg-purple-600 focus:outline-none focus:ring-2  focus:ring-offset-2 "
+          >
+            Configurar perfil
+          </button>
+          
         </div>
+      </div>
+      <a
+        href='api/auth/logout'
+        className="mt-8 w-36 max-w-xs px-4 py-2 bg-red-500 text-white font-semibold rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 text-center"
+      >
+        Cerrar sesión
+      </a>
+    </div>
     );
 };
