@@ -347,7 +347,7 @@ export default function Payments() {
           </p>
         </motion.div>
 
-        <div className="flex justify-center pt-6">
+       <div className="flex justify-center pt-6">
           {paymentMethod === "mercado_pago" && preferenceId ? (
             <PaymentButton preferenceId={preferenceId} />
           ) : (

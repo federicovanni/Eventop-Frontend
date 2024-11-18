@@ -11,7 +11,8 @@ const App: React.FC = () => {
   useEffect(() => {
     const createPreference = async () => {
       console.log("ID de evento:", eventId);
-
+      // Verificar el valor de la URL de la API
+      console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
       try {
         console.log("Bloque try");
 
