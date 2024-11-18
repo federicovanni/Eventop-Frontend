@@ -7,7 +7,7 @@ export const UserInfo = () => {
     const { error, isLoading, user } = useUser();
     
     const [userData, setUserData] = useState<UserProfile | null>(null);
-    
+     
     useEffect(() => {
         if (user) {
             setUserData(user);
@@ -41,7 +41,7 @@ export const UserInfo = () => {
               <div className="relative w-24 h-24 rounded-full overflow-hidden">
               <img
                 src={userData.picture || 'https://i.pinimg.com/736x/05/f9/fa/05f9fa8e055a33e9e59ca51bca27e401.jpg'}
-                alt={userData.name ? `${userData.name}'s picture` : 'Usuario'}
+                alt={userData.name ? `${userData.name}'s picture` : 'Usuario'}               
                 loading="lazy"
                 className="rounded-full shadow-md"
                 srcSet={`${userData.picture}?w=300 300w, ${userData.picture}?w=600 600w, ${userData.picture}?w=1200 1200w`} // Usa imágenes optimizadas para diferentes tamaños
