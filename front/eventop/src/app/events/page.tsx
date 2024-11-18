@@ -1,15 +1,12 @@
-
-import { EncontraEventos } from '@/views/EncontraEventos/EncontraEventos'
-import React from 'react'
+import { EncontraEventos } from "@/views/EncontraEventos/EncontraEventos";
+import React from "react";
 
 export const page = () => {
   return (
     <>
-     <EncontraEventos/>
-     
+      <EncontraEventos />
     </>
-  )
-}
+  );
+};
 
-
-export default page
+export default page;
