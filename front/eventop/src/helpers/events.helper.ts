@@ -114,7 +114,7 @@ export const useEventById = (id: string | number) => {
         
         setEvent(data);
       } catch (error) {
-        console.error('Error en useEventById:', error);
+        console.log('Error en useEventById:', error);
         setError(error instanceof Error ? error.message : "Error desconocido al obtener el evento");
       } finally {
         setLoading(false);

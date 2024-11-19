@@ -11,10 +11,23 @@ export default function EnhancedDialogflowChatbot() {
     script.async = true
     document.body.appendChild(script)
 
+    // Verificar el estado de apertura en localStorage
+    const hasOpened = localStorage.getItem('chatbotOpened')
+    if (hasOpened) {
+      setIsOpen(false)
+    }
+
     return () => {
       document.body.removeChild(script)
     }
   }, [])
+
+  const toggleChatbot = () => {
+    setIsOpen(!isOpen)
+    if (!isOpen) {
+      localStorage.setItem('chatbotOpened', 'true')
+    }
+  }
 
   return (
     <>
@@ -29,7 +42,7 @@ export default function EnhancedDialogflowChatbot() {
       ></df-messenger>
       <button 
         className="chat-toggle-btn"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleChatbot}
         aria-label={isOpen ? "Cerrar chat" : "Abrir chat"}
       >
         <span className="chat-toggle-icon"></span>
