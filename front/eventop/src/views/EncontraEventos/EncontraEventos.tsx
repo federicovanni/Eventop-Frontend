@@ -6,7 +6,7 @@ import { ICategory } from "@/interfaces/ICategoty";
 import { IEvents } from "@/interfaces/IEventos";
 import { ILocation } from "@/interfaces/ILocations";
 import { motion } from "framer-motion";
-import { Search, Calendar, MapPin } from "lucide-react";
+import { Search, Calendar, MapPin, DollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -171,11 +171,11 @@ export const EncontraEventos = () => {
                   onChange={(e) => setPriceFilter(e.target.value)}
                 >
                   <option value="">Todos los precios</option>
-                  <option value="free">Gratis</option>
-                  <option value="50">Hasta $1000</option>
-                  <option value="100">Hasta $10000</option>
-                  <option value="500">Hasta $50000</option>
-                  <option value="1000">Hasta $100000</option>
+                  <option value="0">Gratis</option>
+                  <option value="50">Hasta 50</option>
+                  <option value="100">Hasta 100</option>
+                  <option value="500">Hasta 500</option>
+                  <option value="1000">Hasta 1000</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                   <svg
@@ -235,6 +235,10 @@ export const EncontraEventos = () => {
                       <div className="flex items-center text-gray-300">
                         <MapPin className="h-5 w-5 mr-2 text-purple-400" />
                         <span>{event.location_id.city}</span>
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <DollarSign className="h-5 w-5 mr-2 text-purple-400" />
+                        <span>{event.price}</span>
                       </div>
                     </div>
                   </motion.div>
