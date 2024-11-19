@@ -6,10 +6,12 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { login } from "@/helpers/auth.helper";
 import Cookies from "js-cookie";
+import { useAdmin } from "@/context/admincontext";
 
 
 export const Login = () => {
   const router = useRouter();
+  const { setIsAdmin } = useAdmin();
 
   const [userData, setUserData] = useState<ILoginProps>({
     email: "",
@@ -76,7 +78,8 @@ export const Login = () => {
       
       // Almacenar token y datos de usuario en localStorage
      Cookies.set("adminToken", JSON.stringify({ access_token }));
-
+     setIsAdmin(true);
+        
       // Pop-up de éxito
       Swal.fire({
         title: "¡Éxito!",
