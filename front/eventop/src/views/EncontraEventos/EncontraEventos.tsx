@@ -115,7 +115,6 @@ export const EncontraEventos = () => {
               Filtrar Eventos
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-             
               <div className="relative">
                 <input
                   type="text"
@@ -127,7 +126,6 @@ export const EncontraEventos = () => {
                 <Search className="absolute left-4 top-3.5 h-5 w-5 text-gray-300" />
               </div>
 
-             
               {["Categoría", "Ubicación"].map((label, index) => (
                 <div key={label} className="relative">
                   <select
@@ -163,7 +161,6 @@ export const EncontraEventos = () => {
                 </div>
               ))}
 
-              
               <div className="relative">
                 <select
                   className="w-full pl-4 pr-10 py-3 bg-gray-900 bg-opacity-50 border border-purple-500 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 text-white transition duration-300"
@@ -172,10 +169,10 @@ export const EncontraEventos = () => {
                 >
                   <option value="">Todos los precios</option>
                   <option value="free">Gratis</option>
-                  <option value="50">Hasta $1000</option>
-                  <option value="100">Hasta $10000</option>
-                  <option value="500">Hasta $50000</option>
-                  <option value="1000">Hasta $100000</option>
+                  <option value="50">Hasta $50</option>
+                  <option value="100">Hasta $100</option>
+                  <option value="500">Hasta $500</option>
+                  <option value="1000">Hasta $1000</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                   <svg
