@@ -5,7 +5,7 @@ import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import Script from "next/script";
-import ChatBot from "@/components/ChatBot";
+
 import { AdminProvider } from "@/context/admincontext";
 
 const geistSans = localFont({
@@ -40,14 +40,14 @@ export default function RootLayout({
           {children}
           <Footer />
           <Script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></Script>
-            {/* <df-messenger
+            <df-messenger
               intent="WELCOME"
               chat-title="Eventop"
               agent-id="e58e2f28-b4d2-468c-b436-7d5ac5896bf9"
               language-code="es"
               className="bg-gray-900"
-            ></df-messenger> */}
-          <ChatBot/>
+            ></df-messenger>
+          
         </body>
         </AdminProvider>
       </UserProvider>

@@ -197,7 +197,7 @@ export default function Payments() {
             </select>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="email" className="block text-sm font-semibold mb-2">
               Correo Electrónico
             </label>
@@ -210,7 +210,7 @@ export default function Payments() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 border border-purple-500 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white transition-colors duration-200 text-gray-800"
             />
-          </div>
+          </div> */}
         </div>
 
         <div>
