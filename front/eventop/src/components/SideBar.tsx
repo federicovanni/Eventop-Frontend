@@ -128,10 +128,10 @@ const SideBar = () => {
                   </summary>
                   <ul className="menu dropdown-content  bg-gray-700 rounded-box z-[1] w-52 p-2 shadow">
                     <li>
-                      <Link href="#">Crear</Link>
+                      <Link href="admin/event/create-event">Crear</Link>
                     </li>
                     <li>
-                      <Link href="#">Editar</Link>
+                      <Link href="admin/event/edit-event">Editar</Link>
                     </li>
                   </ul>
                 </details>
