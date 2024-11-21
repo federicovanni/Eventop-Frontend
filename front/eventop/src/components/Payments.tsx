@@ -17,12 +17,10 @@ export default function Payments() {
   const [ticketCount, setTicketCount] = useState(1);
   const [basePrice, setBasePrice] = useState(50); // Price in USD
   const [total, setTotal] = useState(50);
-  const [paymentMethod, setPaymentMethod] = useState<
-    "credit_card" | "mercado_pago"
-  >("credit_card");
+  const [paymentMethod, setPaymentMethod] = useState<"credit_card" | "mercado_pago">("credit_card");
   const [language, setLanguage] = useState<Language>("es");
   const [currency, setCurrency] = useState<Currency>("USD");
-  const [email, setEmail] = useState(""); // Nuevo estado para el correo electrónico
+  //const [email, setEmail] = useState(""); // Nuevo estado para el correo electrónico
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCVC, setCardCVC] = useState("");
@@ -30,7 +28,7 @@ export default function Payments() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const eventId = 1; // Replace with the actual event ID
-
+  const email = "admin@example.com";
   const [errors, setErrors] = useState({
     cardNumber: false,
     cardExpiry: false,
@@ -50,16 +48,13 @@ export default function Payments() {
       console.log("email:", email);
 
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/payment/create_preference`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ eventId, email }), // Incluir el correo electrónico en el cuerpo de la solicitud
-          }
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create_preference`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ eventId, email }), // Incluir el correo electrónico en el cuerpo de la solicitud
+        });
 
         if (!response.ok) {
           const errorMessage =
@@ -126,21 +121,14 @@ export default function Payments() {
 
   return (
     <div className="max-w-sm mx-auto mt-10 p-6 bg-white text-gray-900 shadow-xl rounded-xl transition-all duration-300 ease-in-out hover:shadow-2xl sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{t.title}</h2>
         <p className="text-gray-600 text-xs sm:text-sm mb-4">{t.description}</p>
       </motion.div>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4">
           <div>
-            <label
-              htmlFor="language"
-              className="block text-sm font-semibold mb-2"
-            >
+            <label htmlFor="language" className="block text-sm font-semibold mb-2">
               {t.selectLanguage}
             </label>
             <select
@@ -157,10 +145,7 @@ export default function Payments() {
           </div>
 
           <div>
-            <label
-              htmlFor="currency"
-              className="block text-sm font-semibold mb-2"
-            >
+            <label htmlFor="currency" className="block text-sm font-semibold mb-2">
               {t.selectCurrency}
             </label>
             <select
@@ -177,10 +162,7 @@ export default function Payments() {
           </div>
 
           <div>
-            <label
-              htmlFor="tickets"
-              className="block text-sm font-semibold mb-2"
-            >
+            <label htmlFor="tickets" className="block text-sm font-semibold mb-2">
               {t.tickets}
             </label>
             <select
@@ -214,9 +196,7 @@ export default function Payments() {
         </div>
 
         <div>
-          <span className="block text-sm font-semibold mb-3">
-            {t.paymentMethod}
-          </span>
+          <span className="block text-sm font-semibold mb-3">{t.paymentMethod}</span>
           <div className="space-y-3">
             <label className="flex items-center space-x-3 cursor-pointer">
               <input
@@ -253,10 +233,7 @@ export default function Payments() {
               className="space-y-4 overflow-hidden"
             >
               <div>
-                <label
-                  htmlFor="card"
-                  className="block text-sm font-semibold mb-2"
-                >
+                <label htmlFor="card" className="block text-sm font-semibold mb-2">
                   {t.cardNumber}
                 </label>
                 <input
@@ -269,16 +246,11 @@ export default function Payments() {
                     errors.cardNumber ? "border-red-500" : "border-purple-500"
                   } rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white transition-colors duration-200 text-gray-800`}
                 />
-                {errors.cardNumber && (
-                  <p className="text-red-500 text-xs mt-1">{t.invalidCard}</p>
-                )}
+                {errors.cardNumber && <p className="text-red-500 text-xs mt-1">{t.invalidCard}</p>}
               </div>
               <div className="flex space-x-4">
                 <div className="flex-1">
-                  <label
-                    htmlFor="expiry"
-                    className="block text-sm font-semibold mb-2"
-                  >
+                  <label htmlFor="expiry" className="block text-sm font-semibold mb-2">
                     {t.expiry}
                   </label>
                   <input
@@ -291,17 +263,10 @@ export default function Payments() {
                       errors.cardExpiry ? "border-red-500" : "border-purple-500"
                     } rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white transition-colors duration-200 text-gray-800`}
                   />
-                  {errors.cardExpiry && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {t.invalidExpiry}
-                    </p>
-                  )}
+                  {errors.cardExpiry && <p className="text-red-500 text-xs mt-1">{t.invalidExpiry}</p>}
                 </div>
                 <div className="flex-1">
-                  <label
-                    htmlFor="cvc"
-                    className="block text-sm font-semibold mb-2"
-                  >
+                  <label htmlFor="cvc" className="block text-sm font-semibold mb-2">
                     {t.cvc}
                   </label>
                   <input
@@ -314,9 +279,7 @@ export default function Payments() {
                       errors.cardCVC ? "border-red-500" : "border-purple-500"
                     } rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white transition-colors duration-200 text-gray-800`}
                   />
-                  {errors.cardCVC && (
-                    <p className="text-red-500 text-xs mt-1">{t.invalidCVC}</p>
-                  )}
+                  {errors.cardCVC && <p className="text-red-500 text-xs mt-1">{t.invalidCVC}</p>}
                 </div>
               </div>
               <div className="flex items-center">
@@ -327,10 +290,7 @@ export default function Payments() {
                   onChange={(e) => setSavePaymentInfo(e.target.checked)}
                   className="form-checkbox h-5 w-5 text-purple-600"
                 />
-                <label
-                  htmlFor="savePaymentInfo"
-                  className="ml-2 text-sm text-gray-700"
-                >
+                <label htmlFor="savePaymentInfo" className="ml-2 text-sm text-gray-700">
                   {t.savePaymentInfo}
                 </label>
               </div>
@@ -354,7 +314,7 @@ export default function Payments() {
           </p>
         </motion.div>
 
-       <div className="flex justify-center pt-6">
+        <div className="flex justify-center pt-6">
           {paymentMethod === "mercado_pago" && preferenceId ? (
             <PaymentButton preferenceId={preferenceId} />
           ) : (
