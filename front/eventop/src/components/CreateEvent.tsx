@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IEventsCreate } from "@/interfaces/IEventos";
 import { createEvent } from "@/helpers/events.helper";
+import Cookies from "js-cookie";
+import { useGetAllLocations } from "@/helpers/location.helper";
+import { ILocation } from "@/interfaces/ILocations";
 
 interface IFormInput extends Omit<IEventsCreate, "date" | "image"> {
   date: string;
@@ -14,9 +17,13 @@ const EventForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const [image, setImage] = useState<File | null>(null);
 
+  // Llamar a la función useGetAllLocations y desestructurar el resultado
+  const { result: locations, loading } = useGetAllLocations();
+
   // Función para manejar el envío del formulario
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const token = JSON.parse(localStorage.getItem('access_token') || 'null');
+    const token = JSON.parse(Cookies.get("adminToken") || 'null');
+    console.log(token)
     if (!token) {
       throw new Error('No autorizado. El token de autenticación no está presente.');
     }
@@ -26,26 +33,25 @@ const EventForm: React.FC = () => {
       ...data,
       date: new Date(data.date), // Convertir `date` a una instancia de `Date`
     };
- 
+
     try {
       console.log(formattedData)
       console.log(image)
       const response = await createEvent(formattedData, token, image);
       console.log(response);
     } catch (error) {
-      console.error('Error al crear el evento:', error);
+      console.error("Error creando el evento:", error);
     }
   };
 
   // Función para manejar la subida de la imagen
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-    setImage(e.target.files[0]);
+      setImage(e.target.files[0]);
     }
   };
 
   return (
-    
     <form onSubmit={handleSubmit(onSubmit)} className="text-gray-900 mt-11space-y-4 p-4 border rounded-lg shadow-lg max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-slate-200">Crear Evento</h1>
 
@@ -82,7 +88,6 @@ const EventForm: React.FC = () => {
           type="date"
           {...register("date", { required: "La fecha es obligatoria" })}
           className="mt-1 p-2 border w-full rounded-md"
-          
         />
         {errors.date && <span className="text-red-500 text-sm">{errors.date.message}</span>}
       </div>
@@ -104,26 +109,41 @@ const EventForm: React.FC = () => {
       {/* Categoría */}
       <div>
         <label htmlFor="category_id" className="block text-sm font-semibold text-slate-200">Categoría</label>
-        <input
+        <select
           id="category_id"
-          type="number"
           {...register("category_id", { required: "La categoría es obligatoria", valueAsNumber: true })}
           className="mt-1 p-2 border w-full rounded-md"
-          placeholder="categoria"
-        />
+        >
+          <option value="">Selecciona una categoría</option>
+          <option value={1}>Música</option>
+          <option value={2}>Deportes</option>
+          <option value={3}>Tecnologia</option>
+          <option value={4}>Art</option>
+          <option value={5}>Gastronomia</option>
+          {/* Agrega más categorías según sea necesario */}
+        </select>
         {errors.category_id && <span className="text-red-500 text-sm">{errors.category_id.message}</span>}
       </div>
 
       {/* Ubicación */}
       <div>
         <label htmlFor="location_id" className="block text-sm font-semibold text-slate-200">Ubicación</label>
-        <input
-          id="location_id"
-          type="number"
-          {...register("location_id", { required: "La ubicación es obligatoria", valueAsNumber: true })}
-          className="mt-1 p-2 border w-full rounded-md"
-          placeholder="ubicacion"
-        />
+        {loading ? (
+          <p>Cargando ubicaciones...</p>
+        ) : (
+          <select
+            id="location_id"
+            {...register("location_id", { required: "La ubicación es obligatoria", valueAsNumber: true })}
+            className="mt-1 p-2 border w-full rounded-md"
+          >
+            <option value="">Selecciona una ubicación</option>
+            {locations !== null && locations.map((location: ILocation) => (
+              <option key={location.locationId} value={location.locationId}>
+                {location.city}, {location.state}, {location.country}
+              </option>
+            ))}
+          </select>
+        )}
         {errors.location_id && <span className="text-red-500 text-sm">{errors.location_id.message}</span>}
       </div>
 

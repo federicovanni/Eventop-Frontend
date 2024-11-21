@@ -13,8 +13,9 @@ export const createEvent = async (data: IEventsCreate, token: any, image: File |
     // Crear un FormData y agregar los datos y la imagen
     const formData = new FormData();
     formData.append('data', JSON.stringify(data)); // Agregar los datos como string
-    formData.append('image', image); // Agregar la imagen como archivo
-
+    if (image) {
+      formData.append('image', image); // Agregar la imagen como archivo
+    }
     const response = await fetch(`${APIURL}/events/create`, {
       method: "POST",
       headers: {
