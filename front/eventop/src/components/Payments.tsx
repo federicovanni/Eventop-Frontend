@@ -35,8 +35,10 @@ export default function Payments() {
 
   const eventId = params.eventId as string;
   const email = user?.email; // Usa el email del usuario logueado
+  const quantity = ticketCount;
   console.log("ID del evento", eventId);
   console.log("Email del usuario", email);
+  console.log("quantity", quantity);
 
   const [errors, setErrors] = useState({
     cardNumber: false,
@@ -84,7 +86,7 @@ export default function Payments() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ eventId, email }), // Incluir el correo electrónico en el cuerpo de la solicitud
+            body: JSON.stringify({ eventId, email, quantity }), // Incluir el correo electrónico en el cuerpo de la solicitud
           }
         );
 
