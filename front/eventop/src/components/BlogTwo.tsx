@@ -8,30 +8,28 @@ const BlogTwo = () => {
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center">
             <div>
               <div className="flex flex-col items-center justify-center">
-                <a
-                  className="inline-flex px-1 py-1 gap-x-2 rounded-xl  border-gray-400 border-2 hover:border-purple-500 items-center text-sm font-semibold text-gray-300 space-x-1"
-                  href="#"
-                >
-                  <span className="bg-purple-500 flex items-center justify-center gap-2 text-white text-sm font-semibold px-2.5 py-0.5 rounded-lg ">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-6 w-6 text-white"
-                    >
-                      <path d="m3 11 18-5v12L3 14v-3z"></path>
-                      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
-                    </svg>
-                    Nuevo
-                  </span>
-                  <span>¡Publica tus eventos aquí!</span>
-                </a>
+              <div className="inline-flex gap-x-2 items-center text-sm font-semibold text-gray-300 space-x-1">
+  <span className="bg-purple-500 flex items-center justify-center gap-2 text-white text-sm font-semibold px-2.5 py-0.5 rounded-lg">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-6 w-6 text-white"
+    >
+      <path d="m3 11 18-5v12L3 14v-3z"></path>
+      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+    </svg>
+    Nuevo
+  </span>
+  <span>¡Publica tus eventos aquí!</span>
+</div>
+
                 <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
                   <p className="sm:block">Únete a</p>
                   <span className="text-white md:block">la comunidad de</span>
